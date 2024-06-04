@@ -1,0 +1,216 @@
+/* Higher than 1200 (desktop devices) */
+@media (min-width: 1200px) {
+    body {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+
+    .container-fluid-full {
+        border: 2px solid #ccc;
+        padding: 20px;
+    }
+
+    #content {
+        width: 100%;
+        padding: 20px;
+        margin: 0 auto;
+    }
+
+    .sidebar-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+
+    .sidebar-menu li {
+        padding: 5px 10px;
+        border-right: 1px solid #ccc;
+    }
+
+    .sidebar-menu li:last-child {
+        border-right: none;
+    }
+
+    footer {
+        background-color: #007bff;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+    }
+
+
+    .main-menu-horizontal {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-menu-horizontal li {
+        padding: 5px 10px;
+        border-right: 1px solid #ccc;
+        margin: 5px;
+    }
+
+    .main-menu-horizontal li:last-child {
+        border-right: none;
+    }
+}
+
+/* Higher than 960 (desktop devices) */
+@media only screen and (min-width: 980px) and (max-width: 1199px) {
+    /* No changes for this breakpoint */
+}
+
+/* Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 979px) {
+    /* No changes for this breakpoint */
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+    body {
+        background-color: #f8f8f8;
+        color: #666;
+    }
+
+    .container-fluid-full {
+        border: 2px solid #ccc;
+        padding: 10px;
+    }
+
+    #content {
+        width: 100%;
+        padding: 10px;
+        margin: 0;
+    }
+
+    .sidebar-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sidebar-menu li {
+        padding: 5px 10px;
+        border-right: 1px solid #ccc;
+        margin: 5px;
+    }
+
+    .sidebar-menu li:last-child {
+        border-right: none;
+    }
+
+    footer {
+        background-color: #666;
+        color: #fff;
+        text-align: center;
+        padding: 5px;
+    }
+
+   
+    .main-menu-horizontal {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-menu-horizontal li {
+        padding: 5px 10px;
+        border-right: 1px solid #ccc;
+        margin: 5px;
+    }
+
+    .main-menu-horizontal li:last-child {
+        border-right: none;
+    }
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+    /* No changes for this breakpoint */
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+    body {
+        background-color: #f9f9f9;
+        color: #777;
+    }
+
+    .container-fluid-full {
+        border: 1px solid #ccc;
+        padding: 5px;
+    }
+
+    #content {
+        width: 100%;
+        padding: 5px;
+        margin: 0;
+    }
+
+    .sidebar-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sidebar-menu li {
+        padding: 5px 10px;
+        border-right: 1px solid #ccc;
+        margin: 5px;
+    }
+
+    .sidebar-menu li:last-child {
+        border-right: none;
+    }
+
+    footer {
+        background-color: #777;
+        color: #fff;
+        text-align: center;
+        padding: 3px;
+    }
+
+   
+    .main-menu-horizontal {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-menu-horizontal li {
+        padding: 5px 10px;
+        border-right: 1px solid #ccc;
+        margin: 5px;
+    }
+
+    .main-menu-horizontal li:last-child {
+        border-right: none;
+    }
+}
