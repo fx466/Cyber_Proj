@@ -192,6 +192,7 @@ class Web extends CI_Controller
         $data                      = array();
         $data['customer_name']     = $this->input->post('customer_name');
         $data['customer_email']    = $this->input->post('customer_email');
+        // $data['customer_password'] = password_hash($this->input->post('customer_password'), PASSWORD_DEFAULT);
         $data['customer_password'] = md5("SecUrE@sAL1".md5($this->input->post('customer_password')));
         $data['customer_address']  = $this->input->post('customer_address');
         $data['customer_city']     = $this->input->post('customer_city');
