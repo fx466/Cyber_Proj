@@ -224,6 +224,39 @@ class CI_Output {
 			return $this;
 		}
 
+		// Security checks for file uploads
+		if (strncasecmp($header, 'content-type', 12) === 0)
+		{
+			// Prevent setting executable MIME types
+			$unsafe_mimes = array('application/x-httpd-php', 'text/html', 'text/javascript');
+			foreach ($unsafe_mimes as $unsafe_mime)
+			{
+				if (stripos($header, $unsafe_mime) !== false)
+				{
+					// Log attempt and set to a safe default
+					log_message('warning', 'Attempt to set unsafe Content-Type: ' . $header);
+					$header = 'Content-Type: application/octet-stream';
+					break;
+				}
+			}
+		}
+		elseif (strncasecmp($header, 'content-disposition', 19) === 0)
+		{
+			// Ensure filenames are safe
+			if (preg_match('/filename=["\'](.*)["\']/', $header, $matches))
+			{
+				$filename = $matches[1];
+				$safe_filename = preg_replace('/[^a-zA-Z0-9\-\_\.]/', '', $filename);
+				$header = str_replace($filename, $safe_filename, $header);
+			}
+		}
+	
+		// Add X-Content-Type-Options: nosniff
+		if (strncasecmp($header, 'x-content-type-options', 23) === 0)
+		{
+			$header = 'X-Content-Type-Options: nosniff';
+		}
+
 		$this->headers[] = array($header, $replace);
 		return $this;
 	}
