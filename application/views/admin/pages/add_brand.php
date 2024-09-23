@@ -32,19 +32,23 @@
                 <p><?php echo $this->session->flashdata('message');?></p>
             </div>
             <div class="box-content">
+                <!-- 添加商品信息的表单 -->
                 <form class="form-horizontal" action="<?php echo base_url('save/brand')?>" method="post">
                 <?php
-
+                // 添加CSRF token的生成
                 $csrf = array(
-
+                    # $csrf['name']获取 CSRF token名称。
                 'name' => $this->security->get_csrf_token_name(),
-
+                    // $csrf['hash']：获取 CSRF token的哈希值。
                 'hash' => $this->security->get_csrf_hash()
 
                 );
 
                 ?>
-
+                    <!-- 
+                        添加 CSRF 隐藏的输入字段，用于存储 CSRF token；
+                        作用：当表单提交时，服务器会检查这个 token，确保请求是合法的，避免跨站请求伪造攻击。
+                     -->
                     <input type="hidden" name="<?=$csrf['name'];?>" value="<?=$csrf['hash'];?>" />                
                     <fieldset>
 

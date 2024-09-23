@@ -34,7 +34,7 @@
             <div class="box-content">
                 <form class="form-horizontal" action="<?php echo base_url('update/brand/'.$brand_info_by_id->brand_id)?>" method="post">
                 <?php
-
+                // 添加CSRF token的生成
                 $csrf = array(
 
                 'name' => $this->security->get_csrf_token_name(),

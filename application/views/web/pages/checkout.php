@@ -13,7 +13,7 @@
             </div>
             <form method="post" action="<?php echo base_url('save/order');?>" style="text-align: left">
             <?php
-
+            // 添加CSRF token的生成
             $csrf = array(
 
             'name' => $this->security->get_csrf_token_name(),

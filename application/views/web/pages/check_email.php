@@ -4,7 +4,7 @@
             <h3 style="font-size: 24px; color: #333;">Register New Account</h3>
             <form>
             <?php
-
+            // 添加CSRF token的生成
             $csrf = array(
 
             'name' => $this->security->get_csrf_token_name(),

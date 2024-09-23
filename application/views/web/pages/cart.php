@@ -54,7 +54,7 @@
 
                                     <form action="<?php echo base_url('update/cart'); ?>" method="post">
                                     <?php
-
+                                            // 添加CSRF token的生成
                                             $csrf = array(
 
                                             'name' => $this->security->get_csrf_token_name(),
@@ -87,7 +87,7 @@
 
                                     <form action="<?php echo base_url('remove/cart'); ?>" method="post">
                                     <?php
-
+                                            // 添加CSRF token的生成
                                             $csrf = array(
 
                                             'name' => $this->security->get_csrf_token_name(),

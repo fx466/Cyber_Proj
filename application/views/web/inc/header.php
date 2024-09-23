@@ -136,7 +136,7 @@
                 <div class="search_box">
                     <form method="get" action="<?php echo base_url('search')?>">
                     <?php
-
+                    // 添加CSRF token的生成
                     $csrf = array(
 
                     'name' => $this->security->get_csrf_token_name(),

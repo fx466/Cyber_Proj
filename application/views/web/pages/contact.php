@@ -19,7 +19,7 @@
 
 
                     <?php
-
+                    // 添加CSRF token的生成
                     $csrf = array(
 
                     'name' => $this->security->get_csrf_token_name(),

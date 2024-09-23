@@ -34,7 +34,7 @@
             <div class="box-content">
                 <form class="form-horizontal" action="<?php echo base_url('update/slider/'.$slider_info_by_id->slider_id);?>" method="post" enctype="multipart/form-data">
                 <?php
-
+                // 添加CSRF token的生成
                 $csrf = array(
 
                 'name' => $this->security->get_csrf_token_name(),

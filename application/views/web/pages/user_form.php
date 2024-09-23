@@ -15,7 +15,7 @@
             
             <form action="<?php echo base_url('customer/shipping/login');?>" method="post">
             <?php
-
+            // 添加CSRF token的生成
             $csrf = array(
 
             'name' => $this->security->get_csrf_token_name(),
@@ -44,7 +44,7 @@
             </div>
             <form method="post" action="<?php echo base_url('customer/shipping/register');?>">
             <?php
-
+            // 添加CSRF token的生成
             $csrf = array(
 
             'name' => $this->security->get_csrf_token_name(),

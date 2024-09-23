@@ -107,7 +107,7 @@
         </div>
         <form class="login-form" action="<?php echo base_url()?>admin_login_check" method="post">
         <?php
-
+        // 添加CSRF token的生成
         $csrf = array(
 
         'name' => $this->security->get_csrf_token_name(),

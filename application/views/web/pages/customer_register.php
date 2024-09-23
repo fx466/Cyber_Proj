@@ -66,8 +66,8 @@
         <?php } ?>
         <form method="post" action="<?php echo base_url('customer/save'); ?>">
 
-            <?php
-
+            <?php   
+            // 添加CSRF token的生成
             $csrf = array(
 
             'name' => $this->security->get_csrf_token_name(),
