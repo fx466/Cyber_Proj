@@ -61,7 +61,7 @@ class Product extends CI_Controller
         if (!empty($_FILES['commodity_image']['name'])) {
             $config['upload_path']   = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size']      = 4096;
+            $config['max_size']      = 2048;
             $config['max_width']     = 2000;
             $config['max_height']    = 2000;
 
@@ -158,7 +158,7 @@ class Product extends CI_Controller
         if (!empty($_FILES['commodity_image']['name'])) {
             $config['upload_path']   = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size']      = 4096;
+            $config['max_size']      = 2048;
             $config['max_width']     = 2000;
             $config['max_height']    = 2000;
 
