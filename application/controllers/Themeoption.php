@@ -51,7 +51,7 @@ class Themeoption extends CI_Controller
 
         if (!empty($_FILES['site_logo']['name'])) {
             $config['upload_path']   = './uploads/';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
             $config['max_size']      = 555;
             $config['max_width']     = 555;
             $config['max_height']    = 555;
@@ -71,7 +71,7 @@ class Themeoption extends CI_Controller
 
         if (!empty($_FILES['site_favicon']['name'])) {
             $config['upload_path']   = './uploads/';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
             $config['max_size']      = 555;
             $config['max_width']     = 555;
             $config['max_height']    = 555;

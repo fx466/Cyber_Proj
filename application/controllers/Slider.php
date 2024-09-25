@@ -40,7 +40,7 @@ class Slider extends CI_Controller
 
         if (!empty($_FILES['slider_image']['name'])) {
             $config['upload_path']   = './uploads/';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
             $config['max_size']      = 4096;
             $config['max_width']     = 2000;
             $config['max_height']    = 2000;
@@ -110,7 +110,7 @@ class Slider extends CI_Controller
 
         if (!empty($_FILES['slider_image']['name'])) {
             $config['upload_path']   = './uploads/';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
             $config['max_size']      = 4096;
             $config['max_width']     = 2000;
             $config['max_height']    = 2000;

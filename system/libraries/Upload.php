@@ -102,7 +102,7 @@ class CI_Upload {
 	 *
 	 * @var	string
 	 */
-	public $allowed_types = 'jpg,jpeg,png,gif,pdf';
+	public $allowed_types = '';
 
 	/**
 	 * Temporary filename
