@@ -184,6 +184,8 @@ class CI_Security {
 			// Append application specific cookie prefix
 			if ($cookie_prefix = config_item('cookie_prefix'))
 			{
+				// Sanitize cookie prefix
+				$cookie_prefix = preg_replace('/[^a-zA-Z0-9_]/', '', $cookie_prefix);
 				$this->_csrf_cookie_name = $cookie_prefix.$this->_csrf_cookie_name;
 			}
 
@@ -191,7 +193,7 @@ class CI_Security {
 			$this->_csrf_set_hash();
 		}
 
-		$this->charset = strtoupper(config_item('charset'));
+		$this->charset = strtoupper(config_item('charset') ?: 'UTF-8');
 
 		log_message('info', 'Security Class Initialized');
 	}
