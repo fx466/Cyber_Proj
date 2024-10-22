@@ -122,6 +122,18 @@ class Web_Model extends CI_Model
         return $info->row();
     }
 
+
+    public function get_customer_info_by_email($email)
+    {
+        $this->db->select('*');
+        $this->db->from('sed_current_customers');
+        $this->db->where('customer_email', $email);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+
+
     public function save_payment_info($data)
     {
         $this->db->insert('sed_transaction_data', $data);
