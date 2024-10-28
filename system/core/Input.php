@@ -94,7 +94,7 @@ class CI_Input {
 	 *
 	 * @var	bool
 	 */
-	protected $_enable_csrf = TRUE;
+	protected $_enable_csrf = FALSE;
 
 	/**
 	 * List of all HTTP request headers

@@ -193,7 +193,7 @@ class CI_Security {
 			$this->_csrf_set_hash();
 		}
 
-		$this->charset = strtoupper(config_item('charset') ?: 'UTF-8');
+		$this->charset = strtoupper(config_item('charset'));
 
 		log_message('info', 'Security Class Initialized');
 	}
