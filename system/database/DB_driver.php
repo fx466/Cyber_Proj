@@ -368,14 +368,41 @@ abstract class CI_DB_driver {
 	{
 		if (is_array($params))
 		{
+			$required_params = array('hostname', 'username', 'database');
+			foreach ($required_params as $param) {
+                if (!isset($params[$param]) || empty($params[$param])) {
+                    throw new Exception("Required database parameter '{$param}' is missing");
+                }
+            }
 			foreach ($params as $key => $val)
 			{
-				$this->$key = $val;
+				$this->$key = $this->clean_input($val);
+				// $this->$key = $val;
 			}
 		}
 
 		log_message('info', 'Database Driver Class Initialized');
 	}
+
+    /**
+     * 清理输入数据
+     */
+    protected function clean_input($data) 
+    {
+        if (is_string($data)) {
+            return strip_tags(trim($data));
+        }
+        
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $data[$key] = $this->clean_input($value);
+            }
+        }
+        
+        return $data;
+    }
+
+
 
 	// --------------------------------------------------------------------
 
