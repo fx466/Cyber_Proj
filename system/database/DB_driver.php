@@ -1041,12 +1041,14 @@ abstract class CI_DB_driver {
 			// Bind values' count must match the count of markers in the query
 			if ($bind_count !== $c)
 			{
-				return $sql;
+				log_message('error', 'Parameter count mismatch. Expected: '.$bind_count.', Found: '.$c);
+            	return FALSE;
 			}
 		}
 		elseif (($c = preg_match_all('/'.preg_quote($this->bind_marker, '/').'/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bind_count)
 		{
-			return $sql;
+			log_message('error', 'Parameter count mismatch. Expected: '.$bind_count.', Found: '.$c);
+        	return FALSE;
 		}
 
 		do
