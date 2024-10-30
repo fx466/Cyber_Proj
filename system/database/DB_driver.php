@@ -402,8 +402,29 @@ abstract class CI_DB_driver {
         return $data;
     }
 
-
-
+    /**
+     * 用于验证SQL注入的正则表达式模式
+     * @var array
+     */
+    protected $_sql_injection_patterns = array(
+        '/(\s|^)(union)(\s|$)/i',
+        '/(\s|^)(select\s+sleep\s*\()/i',
+        '/(\s|^)(waitfor\s+delay\s*)/i',
+        '/(\s|^)(benchmark\s*\()/i'
+    );
+	
+    /**
+     * 检查SQL注入模式
+     */
+    protected function _check_sql_injection($sql) 
+    {
+        foreach ($this->_sql_injection_patterns as $pattern) {
+            if (preg_match($pattern, $sql)) {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
 	// --------------------------------------------------------------------
 
 	/**
@@ -645,6 +666,12 @@ abstract class CI_DB_driver {
 		{
 			$return_object = ! $this->is_write_type($sql);
 		}
+
+	    // 检查SQL注入模式 check potential sql injection pattern
+        if ($this->_check_sql_injection($sql)) {
+            log_message('error', 'Potential SQL injection detected');
+            return ($this->db_debug) ? $this->display_error('db_invalid_query') : FALSE;
+        }	
 
 		// Verify table prefix and replace if necessary
 		if ($this->dbprefix !== '' && $this->swap_pre !== '' && $this->dbprefix !== $this->swap_pre)
