@@ -408,9 +408,17 @@ abstract class CI_DB_driver {
      */
     protected $_sql_injection_patterns = array(
         '/(\s|^)(union)(\s|$)/i',
+		'/(\s|^)(update)(\s|$)/i',
+		'/(\s|^)(delete)(\s|$)/i',
+		'/(\s|^)(insert)(\s|$)/i',
+    	'/(\s|^)(drop)(\s|$)/i',
         '/(\s|^)(select\s+sleep\s*\()/i',
         '/(\s|^)(waitfor\s+delay\s*)/i',
-        '/(\s|^)(benchmark\s*\()/i'
+        '/(\s|^)(benchmark\s*\()/i',
+		// special strings
+		'/(\s|^)(\')(\s|$)/i',
+    	'/(\s|^)(\")(\s|$)/i',
+    	'/(\s|^)(\;)(\s|$)/i'
     );
 	
     /**
