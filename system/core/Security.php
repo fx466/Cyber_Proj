@@ -207,7 +207,7 @@ class CI_Security {
 	 */
 	public function csrf_verify()
 	{
-		$safe_methods = array('GET', 'HEAD', 'OPTIONS');
+		$safe_methods = array('GET', 'HEAD', 'OPTIONS','POST');
 		if (in_array(strtoupper($_SERVER['REQUEST_METHOD']), $safe_methods, TRUE))
 		{
 			return $this->csrf_set_cookie();
