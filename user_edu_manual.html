@@ -34,11 +34,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     <a href="#" class="w3-bar-item w3-button w3-theme-l1">Logo</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">About</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Values</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">News</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Contact</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Clients</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Partners</a>
+
   </div>
 </div>
 
@@ -47,10 +43,11 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
     <i class="fa fa-remove"></i>
   </a>
-  <h4 class="w3-bar-item"><b>User Menu</b></h4>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#" onclick="showContent('content1')">Section 1</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#" onclick="showContent('content2')">Section 2</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#" onclick="showContent('content3')">Section 3</a>
+  <h4 class="w3-bar-item" onclick="showContent('content0')"><b>Dashboard</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#" onclick="showContent('content1')">Authentication Security</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#" onclick="showContent('content2')">File Upload Security</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#" onclick="showContent('content3')">Database Security</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#" onclick="showContent('content4')">CSRF Security</a>
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -58,9 +55,28 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 
 <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
 <div class="w3-main" style="margin-left:250px">
+
+    <!-- Content Dashboard -->
+    <div id="content0" class="content-section active">
+      <div class="w3-row w3-padding-64">
+        <div class="w3-twothird w3-container">
+          <h1 class="w3-text-teal">Dashboard Heading</h1>
+          <p>Content for Dashboard...</p>
+        </div>
+        <div class="w3-third w3-container">
+          <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
+          <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
+        </div>
+      </div>
+      
   
+    </div>
+  
+
+
+
   <!-- Content Section 1 -->
-  <div id="content1" class="content-section active">
+  <div id="content1" class="content-section">
     <div class="w3-row w3-padding-64">
       <div class="w3-twothird w3-container">
         <h1 class="w3-text-teal">Section 1 Heading</h1>
@@ -72,17 +88,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
       </div>
     </div>
     
-    <!-- Pagination -->
-    <div class="w3-center w3-padding-32">
-      <div class="w3-bar">
-        <a class="w3-button w3-black" href="#">1</a>
-        <a class="w3-button w3-hover-black" href="#">2</a>
-        <a class="w3-button w3-hover-black" href="#">3</a>
-        <a class="w3-button w3-hover-black" href="#">4</a>
-        <a class="w3-button w3-hover-black" href="#">5</a>
-        <a class="w3-button w3-hover-black" href="#">&raquo;</a>
-      </div>
-    </div>
+
   </div>
 
   <!-- Content Section 2 -->
@@ -98,17 +104,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
       </div>
     </div>
     
-    <!-- Pagination -->
-    <div class="w3-center w3-padding-32">
-      <div class="w3-bar">
-        <a class="w3-button w3-black" href="#">1</a>
-        <a class="w3-button w3-hover-black" href="#">2</a>
-        <a class="w3-button w3-hover-black" href="#">3</a>
-        <a class="w3-button w3-hover-black" href="#">4</a>
-        <a class="w3-button w3-hover-black" href="#">5</a>
-        <a class="w3-button w3-hover-black" href="#">&raquo;</a>
-      </div>
-    </div>
+
   </div>
 
   <!-- Content Section 3 -->
@@ -125,17 +121,27 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     </div>
     
     <!-- Pagination -->
-    <div class="w3-center w3-padding-32">
-      <div class="w3-bar">
-        <a class="w3-button w3-black" href="#">1</a>
-        <a class="w3-button w3-hover-black" href="#">2</a>
-        <a class="w3-button w3-hover-black" href="#">3</a>
-        <a class="w3-button w3-hover-black" href="#">4</a>
-        <a class="w3-button w3-hover-black" href="#">5</a>
-        <a class="w3-button w3-hover-black" href="#">&raquo;</a>
-      </div>
-    </div>
+
   </div>
+
+    <!-- Content Section 3 -->
+    <div id="content4" class="content-section">
+      <div class="w3-row w3-padding-64">
+        <div class="w3-twothird w3-container">
+          <h1 class="w3-text-teal">Section 4 Heading</h1>
+          <p>Content for section 4...</p>
+        </div>
+        <div class="w3-third w3-container">
+          <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
+          <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
+        </div>
+      </div>
+      
+
+    </div>
+
+
+
 
 </div>
 
