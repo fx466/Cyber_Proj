@@ -155,14 +155,89 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <div id="content4" class="content-section">
       <div class="w3-row w3-padding-64">
         <div class="w3-twothird w3-container">
+          <!-- Vulnerability Introduction -->
           <h1 class="w3-text-teal">Vulnerability Introduction</h1>
-          <p>Content for section 4...</p>
+          <p>Cross-Site Request Forgery (CSRF) is a common Web security vulnerability that allows an attacker to send malicious requests as a user without authorization. This attack exploits the authentication information of the user in the login state to trick them into performing unintended actions. Attackers typically embed malicious requests into legitimate websites visited by users by spoofing links or forms, causing users to unknowingly perform sensitive actions such as modifying account information or submitting transaction requests.
+          </p>
+
+          <p>The impact of CSRF vulnerabilities can be severe, especially on platforms that involve sensitive data or transactions. Successful attacks may lead to user account tampering, fund transfer, leakage of private information, and even in the case of administrator account hijacking, the attacker may gain full control of the system. As a result, CSRF vulnerabilities not only pose a personal risk to users, but may also compromise the integrity and security of the entire system.
+          </p>
+
+          <!-- Locating Vulnerability -->
           <h1 class="w3-text-teal">Locating Vulnerability</h1>
-          <p>Content for section 4...</p>
+          <p style="font-weight: bolder;">1. Indicates the security vulnerability of application session</p>
+          <p>Application sessions are the basis for user authentication and authorization, and an attacker can exploit an existing session to initiate a malicious request. Unprotected sessions can cause serious security problems, especially session fixation, which allows an attacker to exploit a user's valid session. The risk of CSRF attacks can be mitigated by strengthening session security, in particular by generating a unique session ID and updating it regularly.
+          </p>
+          <p style="font-weight: bolder;">2. Security vulnerability of web cookie</p>
+          <p>CSRF attacks rely on the fact that the user's Cookie is automatically sent in a request. Cookies usually contain sensitive information such as session ids, and if this information is leaked or maliciously exploited, attackers can impersonate users to initiate requests. Therefore, it is important to protect the security of cookies. By enabling attributes such as HttpOnly, Secure, and SameSite, you can restrict how cookies are accessed and transmitted, reducing the opportunity for attackers to exploit them. In unprotected scenarios, cookies are automatically included in user requests. It is by manipulating this feature that CSRF attacks enable malicious requests to succeed. Therefore, ensuring the security of cookies can significantly reduce the attack surface.
+          </p>
+          <p style="font-weight: bolder;">3. Security of form interaction
+          </p>  
+          <p>Forms are a major vehicle for CSRF attacks, as many malicious requests exploit a user's logged in status by forging form submissions. The core of a CSRF attack is to trick users into submitting malicious forms. If the form submission is not verified with the CSRF token, any external site can forge the request and operate with the user's identity. Ensuring that each form contains a unique CSRF token prevents malicious form submissions. CSRF token authentication is one of the most effective measures to defend against CSRF attacks.
+          </p>
+
+          <!-- Fixing Vulnerability -->
           <h1 class="w3-text-teal">Fixing Vulnerability</h1>
-          <p>Content for section 4...</p>
+          <p style="font-weight: bolder;">1. CSRF related variable definition: Cyber_Proj/system/core/Security.php</p>
+          <p>$_csrf_hash: This is the hash of the CSRF token to verify that the request is legitimate. This hash value is generated each time a request is submitted and is saved in the user's browser Cookie.
+          </p>
+          <p>$_csrf_expire: Defines the expiration time of the CSRF token. The default is 7200 seconds (2 hours). This time limit ensures that the token will not be valid for a long time, reducing the risk of being exploited.</p>  
+          <p>$_csrf_token_name and $_csrf_cookie_name: Define the name of the CSRF token and the Cookie that holds it, respectively. These names are used to validate the request when the form is submitted.
+          </p>
+
+          <p style="font-weight: bolder;">2. Generates a CSRF hash: Cyber_Proj/system/core/Security.php</p>
+          <p>The method is responsible for generating the CSRF token. It first checks if the token in the Cookie already exists, and if it does and is in the correct format (a 32-character hexadecimal string), the token is used directly. If it does not exist or is incorrect, a new random number is generated as a token, obtained using get_random_bytes() or generated using the md5 hash function.</p>
+          <img src="user_edu_imgs/csrf_set_hash.png" alt="csrf_set_hash" style="width:528px;height:358px;">
+          
+          <p style="font-weight: bolder;">3. CSRF constructor: Cyber_Proj/system/core/Security.php</p>
+          <p>The method checks whether CSRF is enabled at initialization and loads CSRF-related Settings from the configuration file, such as token expiration time, token name, Cookie name, and so on. If a Cookie prefix is set in the configuration, the prefix is also automatically added to the name of the CSRF Cookie. Finally, the _csrf_set_hash() method is called to generate the CSRF token.</p>
+          <img src="user_edu_imgs/csrf_construct.png" alt="csrf_construct" style="width:528px;height:458px;">
+          
+          <p style="font-weight: bolder;">4. CSRF verification: Cyber_Proj/system/core/Security.php</p>
+          <p>This function is used to verify the CSRF token. It first checks the request type, skipping validation for secure HTTP methods (GET, HEAD, OPTIONS, POST). For other request methods, it compares the CSRF token submitted by the form to the token stored in the Cookie. If the two do not match, a CSRF error is triggered. If automatic regeneration of CSRF tokens is enabled, old tokens are destroyed and new tokens are generated after each submission. Finally, the _csrf_set_hash() method is called to regenerate the token, ensuring that a separate token is used for each request.</p>
+          <img src="user_edu_imgs/csrf_verify.png" alt="csrf_verify" style="width:528px;height:758px;">
+
+          <p style="font-weight: bolder;">5. CSRF Cookie: Cyber_Proj/system/core/Security.php</p>
+          <p>This function is responsible for storing the generated CSRF token in the user's browser Cookie. It sets the expiration time, Cookie path, domain name, secure transport (cookie_secure), and HttpOnly attribute (cookie_httponly) according to the configuration. If the current connection is not HTTPS and cookie_secure is TRUE, the Cookie is not set.</p>
+          <img src="user_edu_imgs/csrf_set_cookie.png" alt="csrf_set_cookie" style="width:528px;height:458px;">
+
+          <p style="font-weight: bolder;">6. CSRF error displayed: Cyber_Proj/system/core/Security.php</p>
+          <p>When CSRF token validation fails, this function triggers an HTTP 403 error indicating that the request is denied. This is to prevent unauthorized request operations.</p>
+          <img src="user_edu_imgs/csrf_show_error.png" alt="csrf_show_error" style="width:528px;height:158px;">
+          
+          <p style="font-weight: bolder;">8. Get the CSRF token and name: Cyber_Proj/system/core/Security.php</p>
+          <p>get_csrf_hash() : Returns the currently generated CSRF token.</p>
+          <p>get_csrf_token_name() : Returns the name of the CSRF token for use in the form.</p>
+          
+          <p style="font-weight: bolder;">9. CSRF Token in the form: Cyber_Proj/application/views/admin/pages</p>
+          <p>An array $csrf containing token names and hash values is generated by calling the get_csrf_token_name and get_csrf_hash methods from CodeIgniter's security class. In addition, a hidden input form field is created in the form, where the name attribute is the name of the CSRF token and the value attribute is the hash value of the CSRF token. This way, when the form is submitted, the CSRF token is sent to the server as part of the form data. By adding a CSRF token to the form, it prevents attackers from forging user identities and sending malicious requests. An attacker cannot easily obtain a legitimate CSRF token and therefore cannot impersonate a user through a forged form to initiate an operation.</p>
+          <img src="user_edu_imgs/csrf_form.png" alt="csrf_form" style="width:528px;height:158px;">
+
+          <p style="font-weight: bolder;">10. Set the appropriate security configuration: Cyber_Proj/application/config/config.php</p>
+          <p>Enabling CSRF protection throughout the application ensures that every form submission in the application automatically generates and validates a unique CSRF token, which is verified on the server side to ensure that the request is from a legitimate source. This is a fundamental defense against CSRF attacks and prevents maliciously crafted forms from being executed.</p>
+          <img src="user_edu_imgs/csrf_protection_enable.png" alt="csrf_protection_enable" style="width:528px;height:25px;">
+          
+          <p>In our implementation, we define the name of the CSRF token and the name of the corresponding CSRF cookie. In addition, we set the expiration time of the CSRF token to 2 hours. This ensures the user experience and prevents long-lived tokens from being utilized by attackers. At the same time, the automatic regeneration of CSRF tokens is enabled to ensure that the token is updated every time the form is submitted, which further improves security and avoids duplicate token usage. In order to improve application compatibility and flexibility, we have kept the option to exclude CSRF checks in certain scenarios. For example, for some external callbacks or interfaces that do not require CSRF protection, you can configure the configuration to exclude the relevant URIs to ensure that the application will not be blocked from normal business processes due to security checks.</p>
+          <img src="user_edu_imgs/csrf_token_config.png" alt="csrf_token_config" style="width:528px;height:128px;">
+          
+          <p>In terms of enhancing cookie security, our current configuration allows cookies to be accessed via JavaScript and allows cookies to be transmitted over HTTP connections. In a production environment, we recommend enabling these two options, setting the HttpOnly and Secure properties to prevent CSRF token theft through XSS attacks, and ensuring that cookies are only transferred over HTTPS-encrypted connections to further enhance overall security.</p>
+          <img src="user_edu_imgs/csrf_cookie_config.png" alt="csrf_cookie_config" style="width:528px;height:118px;">
+
+          
+          
+
+          <!-- Testing -->
           <h1 class="w3-text-teal">Testing</h1>
-          <p>Content for section 4...</p>
+          <p style="font-weight: bolder;">1. Download the Postman test tool: https://www.postman.com/</p>
+          <p>When using Postman to test CSRF tokens, the main purpose is to simulate browser behavior by submitting a request containing the CSRF token through a form, ensuring that the server can verify the correctness of the CSRF token.</p>
+
+          <p style="font-weight: bolder;">2. Test a legitimate request</p>
+          <p>Select specific request types which are included in the whiltelist such as GET and POST, then enter the destination URL and click send. If the server returns 200, it is successful; otherwise, 403 is denied.</p>
+          <img src="user_edu_imgs/csrf_request_testing.png" alt="csrf_request_testing" style="width:528px;height:248px;">
+
+          <p style="font-weight: bolder;">3. Test CSRF Token value</p>
+          <p>Click Haders to view the cookie parameter. If there is a value and the secure state is ture, it indicates that the security protection of the csrf token is working</p>
+          <img src="user_edu_imgs/csrf_token_testing.png" alt="csrf_token_testing" style="width:528px;height:248px;">
         </div>
         <div class="w3-third w3-container">
           <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
