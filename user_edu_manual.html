@@ -227,11 +227,59 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <div class="w3-row w3-padding-64">
       <div class="w3-twothird w3-container">
         <h1 class="w3-text-teal">Vulnerability Introduction</h1>
-        <p>Content for section 3...</p>
+        <p>SQL injection is a critical vulnerability that occurs when an attacker is able to manipulate SQL queries by injecting malicious code into an application’s input fields, potentially gaining unauthorized access to a database. In the context of a CodeIgniter web application, SQL injection can occur if the application fails to properly sanitize user inputs before incorporating them into SQL queries. CodeIgniter, being a popular PHP framework, includes built-in security features such as Active Record (Query Builder) that help mitigate SQL injection risks by automatically escaping user inputs. However, if developers bypass these safeguards and directly use raw SQL queries without proper input validation or escaping, it can lead to severe security issues. Attackers exploiting SQL injection vulnerabilities can potentially retrieve sensitive data, modify or delete records, and even gain full control over the database, posing significant threats to the security and integrity of the application. To prevent SQL injection in CodeIgniter, developers should consistently use prepared statements, utilize the Query Builder, and validate and sanitize all user inputs.</p>
         <h1 class="w3-text-teal">Locating Vulnerability</h1>
-        <p>Content for section 3...</p>
+        <p style="font-weight: bolder;"> 1. Identify Input Points</p>
+        <p>Start by mapping out all user input fields such as search boxes, login forms, URL parameters, or any other form fields where users can submit data. These are the primary vectors for SQL injection attacks.</p>
+        <p style="font-weight: bolder;"> 2. Test Input Validation</p>
+        <p>test the input fields by entering suspicious characters or SQL-related keywords like ' OR 1=1 -- or '; DROP TABLE users; --. If the application returns an error or behaves unexpectedly, it could indicate a potential vulnerability.</p>
+        <p style="font-weight: bolder;"> 3. Check for Error Messages</p>
+        <p>When testing input fields, watch for detailed database error messages that disclose SQL syntax or database structure. These errors may reveal potential entry points for attackers and are a sign that input sanitization might be missing.</p>
+        <p style="font-weight: bolder;"> 4. Review Source Code</p>
+        <p>Inspect the source code, especially where user inputs are handled, to see how queries are built. If you find raw SQL queries (e.g., $this->db->query()) that incorporate user data without proper sanitization or escaping, this is a red flag for SQL injection.</p>
+        <p style="font-weight: bolder;"> 5. Check for Prepared Statements</p>
+        <p>Ensure that any database queries are using CodeIgniter's Query Builder or Active Record class, which automatically escapes inputs. If the application is using raw SQL queries without binding parameters or escaping user inputs, it increases the risk of SQL injection.</p>
+
+
+
         <h1 class="w3-text-teal">Fixing Vulnerability</h1>
-        <p>Content for section 3...</p>
+        <p style="font-weight: bolder;">1. Database related variable path and definitions: system\database\DB.php  system\database\DB_cache.php system\database\DB_driver.php </p>
+        
+        <p style="font-weight: bolder;">2. Bind Marker Validation </p> 
+        <p>Checks if there's a bind marker (typically something like '?') in the SQL query. If there's no bind marker or if it's not found in the SQL, it returns the raw SQL. </p>
+        <img src="user_edu_imgs\bind_marker.png" alt="fu_set_header" style="width:628px;height:98px;">
+        
+        <p style="font-weight: bolder;">3. Binds Array Normalization </p>
+        <p>Ensures consistent handling of bind parameters by converting single values to arrays and reindexing array keys numerically. This standardization helps prevent injection by ensuring proper parameter formatting</p>
+        <img src="user_edu_imgs\bind_array.png" alt="fu_set_header" style="width:628px;height:298px;">
+        
+        <p style="font-weight: bolder;">4. String Literal Protection </p>
+        <p>It identifies all string literals in the SQL query (content within single or double quotes) and protects them from being mistakenly treated as bind markers. This prevents injection attacks that might try to exploit string content that coincidentally matches the bind marker pattern.</p>
+        <img src="user_edu_imgs\string_protection.png" alt="fu_set_header" style="width:628px;height:98px;">
+        
+        <p style="font-weight: bolder;">5. Parameter Count Validation </p>
+        <p>Ensures the number of provided parameters exactly matches the number of bind markers in the query. Any mismatch could indicate an injection attempt or programming error, and the function safely returns FALSE instead of executing potentially dangerous SQL.</p>
+        <img src="user_edu_imgs\param_count.png" alt="fu_set_header" style="width:628px;height:98px;">
+        
+        <p style="font-weight: bolder;">6. Value Escaping </p>
+        <p>This section properly escapes values before they're inserted into the query. The escape() method (not shown) presumably handles proper SQL escaping of different data types. This is the primary defense against SQL injection, ensuring that special characters in input values can't break out of their intended context.</p>
+        <img src="user_edu_imgs\value_escape.png" alt="fu_set_header" style="width:628px;height:98px;">
+        
+        <p style="font-weight: bolder;">7. Secure Value Replacement</p>
+        <p> code uses substr_replace() rather than string concatenation or simple replacement, which provides precise control over where values are inserted into the query. This prevents attackers from injecting SQL fragments that might be interpreted as part of the query structure.</p>
+        <img src="user_edu_imgs\value_replace.png" alt="fu_set_header" style="width:628px;height:70px;">
+        
+        <p style="font-weight: bolder;">8. _sql_injection_patterns</p>
+        <p> With the given patterns, the regex looks for these words with either spaces or at the start/end of the string. By blocking UNION, UPDATE, DELETE, INSERT, and DROP commands, it prevents attackers from executing unauthorized database operations that could modify or delete data. The /i flag makes the matching case-insensitive for better security coverage.  Functions like SLEEP(), WAITFOR DELAY, and BENCHMARK() are commonly used in blind SQL injection attacks where attackers try to deduce information based on the response time of the database, it could prevents attackers from using timing attacks to extract information from the database even when they can't see the direct output.. </p>
+        <img src="user_edu_imgs\injection_pattern.png" alt="fu_set_header" style="width:528px;height:298px;">
+        
+        <p style="font-weight: bolder;">9. _check_sql_injection($sql) </p>
+        <p> This function serves as the main validation method, iterating through all defined patterns and checking if any match the input SQL string. If a match is found, it returns TRUE, indicating a potential SQL injection attempt.</p>
+        <img src="user_edu_imgs\check_injection.png" alt="fu_set_header" style="width:528px;height:258px;">
+        
+        
+        
+        
         <h1 class="w3-text-teal">Testing</h1>
         <p>Content for section 3...</p>
       </div>
