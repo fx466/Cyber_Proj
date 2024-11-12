@@ -229,8 +229,6 @@ class Web extends CI_Controller
     {
         $data                      = array();
         $data['customer_email']    = $this->input->post('customer_email');
-        //$data['customer_password'] = md5("SecUrE@sAL1".md5($this->input->post('customer_password')));
-        //$data['customer_password'] = password_hash($this->input->post('customer_password'), PASSWORD_DEFAULT);
         $input_password = $this->input->post('customer_password');
         
 
