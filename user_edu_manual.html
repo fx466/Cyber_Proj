@@ -130,9 +130,17 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <div class="w3-row w3-padding-64">
       <div class="w3-twothird w3-container">
         <h1 class="w3-text-teal">Vulnerability Introduction</h1>
-        <p>Content for section 2...</p>
+        <p>File upload vulnerability is a common security risk in Web applications. Attackers can upload malicious files through this vulnerability to perform unauthorized operations. Typically, this type of attack takes advantage of the server's failure to strictly verify the type, size, extension, or content of the uploaded file, allowing malicious files to bypass security checks. An attacker can upload a script file (such as PHP, ASP, etc.) to execute arbitrary code on the server, or upload a file that contains malicious code, causing the server or other users to be attacked.</p>
+        <p>The impact of a file upload vulnerability can be catastrophic. Attackers can implement remote code execution (RCE) through malicious files to control server resources. It is also possible to upload malware or viruses to infect servers and users. In addition, uploading unrestricted files can also trigger a denial of service attack (DoS), depleting server resources and causing the system to crash. In the most severe cases, attackers can even gain complete control of a system through malicious files, causing data breaches, service disruptions, and even compromising the security and integrity of the entire system.</p>
         <h1 class="w3-text-teal">Locating Vulnerability</h1>
-        <p>Content for section 2...</p>
+        <p style="font-weight: bolder;">1. Inadequate file type validation</p>
+        <p>Attackers may upload malicious script files (e.g. PHP, ASP, JSP, etc.) disguised as legitimate files. If the system determines the file type only by the file extension without checking the actual content or MIME type of the file in depth, the malicious file can easily bypass the validation and execute on the server. Therefore, the actual content and MIME type of uploaded files must be strictly verified to avoid relying only on extension filtering.</p>
+        <p style="font-weight: bolder;">2. Unreasonable File Size Limits</p>
+        <p>If the size of uploaded files is not reasonably limited, an attacker may exhaust server storage space or memory resources by uploading huge files, resulting in a denial of service (DoS) attack. To address this vulnerability, it is necessary to set an upper limit on the size of uploaded files on the server side, and reasonably adjust the limit according to the application scenario.</p>
+        <p style="font-weight: bolder;">3. Unprotected File Storage Path</p>
+        <p>If the storage path of a file after upload is not properly configured, an attacker may be able to access, download, or execute the uploaded file directly through a specific path. This type of vulnerability is particularly dangerous because an attacker can use an uploaded malicious file to perform remote code execution. Therefore, it should be ensured that uploaded files are stored in a secure directory with appropriate access rights configured (e.g., disallowing direct access via URL).</p>
+        <p style="font-weight: bolder;">4. Improper handling of file names</p>
+        <p>If the name of an uploaded file is not handled appropriately, an attacker may be able to manipulate the file by using a specially crafted filename (e.g., with the directory traversal character “... /") to manipulate file storage paths to overwrite or access other files on the server. To prevent this vulnerability, uploaded files should be renamed and path handling should be secured.</p>
         <h1 class="w3-text-teal">Fixing Vulnerability</h1>
         <p>Content for section 2...</p>
         <h1 class="w3-text-teal">Testing</h1>
