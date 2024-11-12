@@ -107,7 +107,12 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
         
           <!-- Fixing Vulnerability -->
           <h1 class="w3-text-teal">Fixing Vulnerability</h1>
-          <p style="font-weight: bolder;"></p>
+          <p style="font-weight: bolder;">1. Password_hash: Cyber_Proj\application\controllers\Web.php & Cyber_Proj\system\core\compat\password.php</p>
+          <p>The core function of this function is to convert the user's plaintext password into a secure hash value, which is encrypted using the bcrypt algorithm and automatically handles the generation and formatting of the salt value. In terms of security, the function employs multiple protection mechanisms: it first verifies the validity of the incoming parameters, including checking the type of algorithm, verifying the range of cost values (between 4-31), and checking the length of the salt value. For the generation of the salt value, the function implements multiple secure random number generation schemes in descending order of priority, and tries to use random_bytes(), mcrypt_create_iv(), /dev/urandom, openssl_random_pseudo_bytes(), etc., in turn, to ensure that the generation of cryptographically secure random salt values. Also, the function handles character encoding (mbstring support) with standardized base64 encoding.</p>
+          <img src="user_edu_imgs/auth_password_hash.png" alt="auth_password_hash" style="width:528px;height:658px;">
+          <img src="user_edu_imgs/auth_password_hash(1).png" alt="auth_password_hash" style="width:528px;height:358px;">
+
+          
           <p>
           </p>
 

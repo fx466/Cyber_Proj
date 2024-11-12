@@ -193,7 +193,6 @@ class Web extends CI_Controller
         $data['customer_name']     = $this->input->post('customer_name');
         $data['customer_email']    = $this->input->post('customer_email');
         $data['customer_password'] = password_hash($this->input->post('customer_password'), PASSWORD_DEFAULT);
-        //$data['customer_password'] = md5("SecUrE@sAL1".md5($this->input->post('customer_password')));
         $data['customer_address']  = $this->input->post('customer_address');
         $data['customer_city']     = $this->input->post('customer_city');
         $data['customer_country']  = $this->input->post('customer_country');
@@ -236,7 +235,6 @@ class Web extends CI_Controller
         $this->form_validation->set_rules('customer_password', 'Customer Password', 'trim|required');
 
         if ($this->form_validation->run() == true) {
-            //$result = $this->web_model->get_customer_info($data);
             $result = $this->web_model->get_customer_info_by_email($data['customer_email']);
             
             if ($result) {
@@ -264,7 +262,6 @@ class Web extends CI_Controller
         $data                      = array();
         $data['customer_email']    = $this->input->post('customer_email');
         $data['customer_password'] = password_hash($this->input->post('customer_password'), PASSWORD_DEFAULT);
-        //$data['customer_password'] = md5("SecUrE@sAL1".md5($this->input->post('customer_password')));
         
 
         $this->form_validation->set_rules('customer_email', 'Customer Email', 'trim|required|valid_email');
@@ -298,7 +295,6 @@ class Web extends CI_Controller
         $data['customer_name']     = $this->input->post('customer_name');
         $data['customer_email']    = $this->input->post('customer_email');
         $data['customer_password'] = password_hash($this->input->post('customer_password'), PASSWORD_DEFAULT);
-        //$data['customer_password'] = md5("SecUrE@sAL1".md5($this->input->post('customer_password')));
         $data['customer_address']  = $this->input->post('customer_address');
         $data['customer_city']     = $this->input->post('customer_city');
         $data['customer_country']  = $this->input->post('customer_country');
