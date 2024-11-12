@@ -72,10 +72,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
           <p>Content for Dashboard...</p>
 
         </div>
-        <div class="w3-third w3-container">
-          <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-          <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-        </div>
+
       </div>
       
   
@@ -116,10 +113,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 
 
       </div>
-      <div class="w3-third w3-container">
-        <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-        <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-      </div>
+
     </div>
     
 
@@ -141,15 +135,71 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
         <p>If the storage path of a file after upload is not properly configured, an attacker may be able to access, download, or execute the uploaded file directly through a specific path. This type of vulnerability is particularly dangerous because an attacker can use an uploaded malicious file to perform remote code execution. Therefore, it should be ensured that uploaded files are stored in a secure directory with appropriate access rights configured (e.g., disallowing direct access via URL).</p>
         <p style="font-weight: bolder;">4. Improper handling of file names</p>
         <p>If the name of an uploaded file is not handled appropriately, an attacker may be able to manipulate the file by using a specially crafted filename (e.g., with the directory traversal character “... /") to manipulate file storage paths to overwrite or access other files on the server. To prevent this vulnerability, uploaded files should be renamed and path handling should be secured.</p>
+        <p style="font-weight: bolder;">5. Allowed filetype whitelist</p>
+        <p>A file type whitelist is a security approach that explicitly defines which file types are permitted for upload while blocking all others. This "deny by default, allow by exception" principle is crucial for upload security. The whitelist should validate files through multiple layers: file extensions, MIME types, and actual file content validation.
+        </p>
+        <p style="font-weight: bolder;">6. None executable header</p>
+        <p>The implementation of non-executable headers is a critical security measure for protecting against file upload attacks. When files are uploaded to a server, there's always a risk that malicious users might attempt to upload executable files (like .php, .exe, or script files) that could be executed by the web server if accessed directly. By setting appropriate non-executable headers, you instruct the browser to treat downloaded files as binary data or attachments rather than executable content, even if an attacker manages to bypass other security measures. Key headers like 'X-Content-Type-Options: nosniff' prevent browsers from trying to guess (or "sniff") the content type, which could otherwise lead to arbitrary code execution. The 'Content-Disposition: attachment' header forces the browser to download rather than execute or display the file inline, while 'Content-Type' headers explicitly define how the browser should handle the content. Without these headers, even with extension and MIME type validation in place, there's still a risk that a carefully crafted malicious file could be executed by the browser or intermediary systems, potentially leading to remote code execution, cross-site scripting (XSS), or other security vulnerabilities.
+        </p>
+        <p style="font-weight: bolder;">7. Htaccess</p>
+        <p>The .htaccess file plays a crucial role in protecting against file upload attacks by providing server-level security controls. When implementing file upload functionality, properly configured .htaccess rules can act as a last line of defense even if other security measures fail. By setting appropriate Apache directives, you can prevent the execution of potentially malicious files in upload directories, deny direct access to sensitive file types, and enforce specific handling of file types. For example, even if an attacker successfully uploads a PHP file disguised as an image, .htaccess rules can prevent its execution by either blocking access to PHP files entirely in upload directories or forcing all files to be downloaded rather than executed.
+        </p>
+        
+        
+        
         <h1 class="w3-text-teal">Fixing Vulnerability</h1>
-        <p>Content for section 2...</p>
+        <p style="font-weight: bolder;">1. File upload related variable definition:  system\libraries\Upload.php, system\core\Security.php 
+        <p>
+         $filename_bad_chars: The security-related variable that defines characters and character sequences that should not be allowed in filenames.
+        </p>
+
+
+        <p style="font-weight: bolder;"> 2. Sanitize_filename() method
+          <p>
+            sanitize_filename(): The security-focused function designed to clean potentially malicious filenames
+          </p>
+        
+        <p style="font-weight: bolder;"> 3. set_allowed_types() method
+          <p>
+            set_allowed_types(): Modified to always convert types to lowercase for consistency.Removed the option for '*' (allow all types) to enforce stricter control. 
+          </p>
+        <p style="font-weight: bolder;"> 4. is_allowed_filetype() method
+          <p>
+            Removed the $ignore_mime parameter to always perform MIME type checking.
+            Added MIME type verification using PHP's finfo class, which is more reliable than relying on client-provided information.
+            Kept the getimagesize() check to ensure the file is a valid image.
+          </p>
+        <p style="font-weight: bolder;"> 5. prep_filename() method:
+            <p>
+              Simplified to use a regex that only allows alphanumeric characters, underscores, and hyphens in the filename.
+          This helps prevent directory traversal attacks and other potential security issues related to malicious filenames.
+        </p>
+        <p style="font-weight: bolder;"> 6. getimagesize() method:
+          <p>
+            The getimagesize() method is used to verify that the file is actually an image, not just named like one.
+      </p>
+      <p style="font-weight: bolder;"> 7. set_header() method:
+        <p>
+          This modified set_header method adds the following security measures:
+          For the Content-Type header: Checks to see if a MIME type (such as PHP, HTML, or JavaScript) is set that could cause security issues. 
+          If an insecure MIME type is detected, a warning is logged and the Content-Type is set to a safe default. 
+          For the Content-Disposition header: Checks the filename, removes potentially harmful characters, and retains only letters, numbers, hyphens, underscores, and dots. 
+        </p>
+      
+        <p style="font-weight: bolder;"> 8. IfModule authz_core_module:
+          <p>
+            This is a conditional statement that checks to see if a specific module is enabled on the server. It detects if the module authz_core_module is loaded and decides to use a different syntax to implement access restrictions. This is because Apache 2.4 and above has a different access control syntax than previous versions. 
+          </p>
+        
+          <p style="font-weight: bolder;"> 8. set_filename function:
+            <p>
+              Its main purpose is to generate a secure and unique filename for the uploaded file to avoid conflicts with existing files and to prevent certain security issues associated with file uploads.
+            </p>
+
         <h1 class="w3-text-teal">Testing</h1>
         <p>Content for section 2...</p>
       </div>
-      <div class="w3-third w3-container">
-        <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-        <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-      </div>
+
     </div>
     
 
@@ -168,17 +218,14 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
         <h1 class="w3-text-teal">Testing</h1>
         <p>Content for section 3...</p>
       </div>
-      <div class="w3-third w3-container">
-        <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-        <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-      </div>
+
     </div>
     
     <!-- Pagination -->
 
   </div>
 
-    <!-- Content Section 3 -->
+    <!-- Content Section 4 -->
     <div id="content4" class="content-section">
       <div class="w3-row w3-padding-64">
         <div class="w3-twothird w3-container">
@@ -266,10 +313,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
           <p>Click Haders to view the cookie parameter. If there is a value and the secure state is ture, it indicates that the security protection of the csrf token is working</p>
           <img src="user_edu_imgs/csrf_token_testing.png" alt="csrf_token_testing" style="width:528px;height:248px;">
         </div>
-        <div class="w3-third w3-container">
-          <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-          <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-        </div>
+
       </div>
       
 
