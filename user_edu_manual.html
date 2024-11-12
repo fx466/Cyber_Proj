@@ -148,36 +148,45 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
         
         
         <h1 class="w3-text-teal">Fixing Vulnerability</h1>
-        <p style="font-weight: bolder;">1. File upload related variable definition:  system\libraries\Upload.php, system\core\Security.php 
+        <p style="font-weight: bolder;">1. File upload related variable definition:  system\libraries\Upload.php, system\core\Security.php</p> 
         <p>
          $filename_bad_chars: The security-related variable that defines characters and character sequences that should not be allowed in filenames.
         </p>
+        <img src="user_edu_imgs/fu_bad_chars.png" alt="fu_bad_chars" style="width:328px;height:358px;">
 
-
-        <p style="font-weight: bolder;"> 2. Sanitize_filename() method
+        <p style="font-weight: bolder;"> 2. Sanitize_filename() method</p>
           <p>
             sanitize_filename(): The security-focused function designed to clean potentially malicious filenames
           </p>
+          <img src="user_edu_imgs/fu_sanitize_filename.png" alt="fu_sanitize_filename" style="width:428px;height:358px;">
         
-        <p style="font-weight: bolder;"> 3. set_allowed_types() method
+        <p style="font-weight: bolder;"> 3. set_allowed_types() method</p>
           <p>
             set_allowed_types(): Modified to always convert types to lowercase for consistency.Removed the option for '*' (allow all types) to enforce stricter control. 
           </p>
+          <img src="user_edu_imgs/fu_set_allowed_types.png" alt="fu_set_allowed_types" style="width:428px;height:358px;">
+
         <p style="font-weight: bolder;"> 4. is_allowed_filetype() method
           <p>
             Removed the $ignore_mime parameter to always perform MIME type checking.
             Added MIME type verification using PHP's finfo class, which is more reliable than relying on client-provided information.
             Kept the getimagesize() check to ensure the file is a valid image.
           </p>
+          <img src="user_edu_imgs/fu_is_allowed_filetype.png" alt="fu_is_allowed_filetype" style="width:528px;height:558px;">
+
         <p style="font-weight: bolder;"> 5. prep_filename() method:
             <p>
               Simplified to use a regex that only allows alphanumeric characters, underscores, and hyphens in the filename.
           This helps prevent directory traversal attacks and other potential security issues related to malicious filenames.
         </p>
+        <img src="user_edu_imgs/fu_prep_filename.png" alt="fu_prep_filename" style="width:528px;height:158px;">
+
         <p style="font-weight: bolder;"> 6. getimagesize() method:
           <p>
             The getimagesize() method is used to verify that the file is actually an image, not just named like one.
       </p>
+      <img src="user_edu_imgs/fu_getimagesize.png" alt="fu_getimagesize" style="width:528px;height:558px;">
+
       <p style="font-weight: bolder;"> 7. set_header() method:
         <p>
           This modified set_header method adds the following security measures:
@@ -185,16 +194,19 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
           If an insecure MIME type is detected, a warning is logged and the Content-Type is set to a safe default. 
           For the Content-Disposition header: Checks the filename, removes potentially harmful characters, and retains only letters, numbers, hyphens, underscores, and dots. 
         </p>
-      
+        <img src="user_edu_imgs/fu_set_header.png" alt="fu_set_header" style="width:528px;height:558px;">
+
         <p style="font-weight: bolder;"> 8. IfModule authz_core_module:
           <p>
             This is a conditional statement that checks to see if a specific module is enabled on the server. It detects if the module authz_core_module is loaded and decides to use a different syntax to implement access restrictions. This is because Apache 2.4 and above has a different access control syntax than previous versions. 
           </p>
+          <img src="user_edu_imgs/htaccess_core_module.png" alt="htaccess_core_module" style="width:258px;height:158px;">
         
           <p style="font-weight: bolder;"> 8. set_filename function:
             <p>
               Its main purpose is to generate a secure and unique filename for the uploaded file to avoid conflicts with existing files and to prevent certain security issues associated with file uploads.
             </p>
+            <img src="user_edu_imgs/fu_set_filename.png" alt="fu_set_filename" style="width:528px;height:558px;">
 
         <h1 class="w3-text-teal">Testing</h1>
         <p>Content for section 2...</p>

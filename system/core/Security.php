@@ -50,7 +50,6 @@ class CI_Security {
 
 	/**
 	 * List of sanitize filename strings
-	 * 文件名中出现的非法字符或字符串
 	 * @var	array
 	 */
 	public $filename_bad_chars =	array(
