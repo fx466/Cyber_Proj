@@ -6,10 +6,7 @@
                 
             </div>
         </div>
-        <div class="copy_right">
-            <p><b>Developed By Team 3 Secure Prgramming e-commerce</b></p>
-            <p><b>Built by Pranjal Batra | Xiaolan Feng | Nihal Manjunath | Xin Geng | Pan Zhang</b></p>
-        </div>
+
     </div>
 </div>
 </body>
